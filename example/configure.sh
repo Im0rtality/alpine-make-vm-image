@@ -9,7 +9,7 @@ step() {
 uname -a
 
 step 'Set up timezone'
-setup-timezone -z Europe/Prague
+setup-timezone -z UTC
 
 step 'Set up networking'
 cat > /etc/network/interfaces <<-EOF
@@ -19,20 +19,8 @@ EOF
 ln -s networking /etc/init.d/net.lo
 ln -s networking /etc/init.d/net.eth0
 
-step 'Adjust rc.conf'
-sed -Ei \
-	-e 's/^[# ](rc_depend_strict)=.*/\1=NO/' \
-	-e 's/^[# ](rc_logger)=.*/\1=YES/' \
-	-e 's/^[# ](unicode)=.*/\1=YES/' \
-	/etc/rc.conf
-
 step 'Enable services'
 rc-update add acpid default
 rc-update add chronyd default
-rc-update add crond default
 rc-update add net.eth0 default
 rc-update add net.lo boot
-rc-update add termencoding boot
-
-step 'List /usr/local/bin'
-ls -la /usr/local/bin
