@@ -1,7 +1,1 @@
-chrony
-doas
-doas-sudo-shim
-less
-logrotate
-openssh
-ssmtp
+curl
